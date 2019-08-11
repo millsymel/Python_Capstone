@@ -159,13 +159,13 @@ print(text1.prepared_text)
 
 
 def build_frequency_table(corpus):
-    corpus = [prepare_text]
     frequency_table = {}
     for word in corpus:
         if word not in frequency_table:
             frequency_table[word] = 0
         frequency_table[word] += 1
     return frequency_table
+print(build_frequency_table(prepare_text(murder_note)))
             
 #class TextSample:
  #   def __init__(self, text, author):
