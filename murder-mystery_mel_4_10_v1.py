@@ -55,8 +55,7 @@ def get_average_sentence_length(text):
     sentence_lengths = []
     for sentence in sentences_in_text:
         sentence_lengths.append(len(sentence.split()))
-        average = sum(sentence_lengths) / len(sentence_lengths)
-     
+    average = sum(sentence_lengths) / len(sentence_lengths) 
     return average
 
 #print(get_average_sentence_length(murder_note))
@@ -199,12 +198,14 @@ print(build_frequency_table(prepare_text(murder_note)))
 
 # In[66]:
 
-
+    
 def ngram_creator(text_list):
     n_gram_list = []
     for element in range(0, len(text_list)-1):
-        n_gram_list.append(text_list[element] + ' ' + text_list[element])
-    print(n_gram_list)
+        n_gram_list.append(text_list[element] + ' ' + text_list[element+1])
+    return n_gram_list
+    
+print(ngram_creator(prepare_text(murder_note)))
     
 
 
@@ -228,7 +229,6 @@ def ngram_creator(text_list):
 def frequency_comparison(table1, table2):
     appearances = 0
     mutual_appearances = 0
-    frequency = mutual_appearances / appearances
     for key in table1:
         if key in table2:
             if table1[key] > table2[key]:
@@ -244,6 +244,7 @@ def frequency_comparison(table1, table2):
             appearances += table2[key]
             if appearances <= 0:
                 appearances = mutual_appearances
+    frequency = mutual_appearances / appearances
     return frequency
 
 
@@ -260,15 +261,10 @@ def frequency_comparison(table1, table2):
 
 # In[ ]:
 
-
 def percent_difference(value1, value2):
-    numerator = 0 
-    denominator = 0
+    numerator = abs(value1 - value2)
+    denominator = (value1 + value2) / 2
     difference = numerator / denominator
-    for value1, value2 in numerator:
-        abs(get_average_sentence_length(value1) - get_average_sentence_length(value2)
-    for value1, value2 in denominator:
-        (get_average_sentence_length(value1) + get_average_sentence_length(value2)) / 2
     return difference
 
 
@@ -284,13 +280,12 @@ def percent_difference(value1, value2):
 # In[ ]:
 
 
-def find_text_similarity(value1, value2):
-    sentence_length_difference = percent_difference(value1, value2)
+def find_text_similarity(sample1, sample2):
+    sentence_length_difference = percent_difference(sample1.average_sentence_length, sample2.average_sentence_length)
     sentence_length_similarity = abs(1 - sentence_length_difference)
-    word_count_similarity = frequency_comparison(value1.word_count_frequency, value2.word_count_frequency)
-    ngram_similarity = frequency_comparison(value1.ngram_frequency, value2.ngram_frequency)
+    word_count_similarity = frequency_comparison(sample1.word_count_frequency, sample2.word_count_frequency)
+    ngram_similarity = frequency_comparison(sample1.ngram_frequency, sample2.ngram_frequency)
     return (sentence_length_similarity + word_count_similarity + ngram_similarity)/3
-
 
 # ## Rendering the Results
 # 
@@ -314,12 +309,6 @@ class TextSample:
 
     def __repr__(self):
         return str(self.author) + " " + str(self.average_sentence_length)
-
-    
-    /* def __repr__(self):
-        return str(self.author) + str(self.prepared_text_alt) + str(self.word_count_frequency) + str(self.ngram)
-        return str(self.author) + str(find_text_similarity(murder_sample, self)) */
-
 
 
 
