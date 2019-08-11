@@ -307,17 +307,18 @@ class TextSample:
         self.raw_text = text
         self.author = author
         self.prepared_text = prepare_text(text)
-        self.average_sentence_length = get_sentences_in_text(self.raw_text)
-        self.word_count_frequency = build_frequency_table(self.prepared_text_alt)
-        self.ngram = ngram_creator(self.prepared_text_alt)
+        self.average_sentence_length = get_average_sentence_length(text)
+        self.word_count_frequency = build_frequency_table(self.prepared_text)
+        self.ngram_frequency = build_frequency_table(ngram_creator(self.prepared_text))
 
 
     def __repr__(self):
-        return str(self.author) + str(self.prepared_text)
+        return str(self.author) + " " + str(self.average_sentence_length)
+
     
-    def __repr__(self):
+    /* def __repr__(self):
         return str(self.author) + str(self.prepared_text_alt) + str(self.word_count_frequency) + str(self.ngram)
-        return str(self.author) + str(find_text_similarity(murder_sample, self))
+        return str(self.author) + str(find_text_similarity(murder_sample, self)) */
 
 
 
